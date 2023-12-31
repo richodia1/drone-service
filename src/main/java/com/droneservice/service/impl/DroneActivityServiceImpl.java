@@ -13,6 +13,8 @@ import com.droneservice.service.DroneActivityService;
 import com.droneservice.service.MedicationService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,12 @@ public class DroneActivityServiceImpl implements DroneActivityService {
 
     @Autowired public DroneActivityServiceImpl(ModelMapper modelMapper) {
        this.modelMapper = modelMapper;
+        modelMapper.getConfiguration()
+                .setFieldMatchingEnabled(true)
+                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE)
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setAmbiguityIgnored(true)  // Ignore ambiguous matches
+                .setSkipNullEnabled(true);
     }
 
 

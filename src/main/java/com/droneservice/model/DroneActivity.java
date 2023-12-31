@@ -30,7 +30,7 @@ public @Data class DroneActivity {
     private Integer quantity;
 
     @Column(name="max_weight_loaded")
-    private Double weightLoaded;
+    private Double weightLoaded = 0.0;
 
     @Column(name="destinationm_address",columnDefinition="TEXT")
     private String address;

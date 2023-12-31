@@ -6,7 +6,6 @@ import com.droneservice.dto.DroneBatteryDTO;
 import com.droneservice.dto.DroneDTO;
 import com.droneservice.model.Drone;
 import com.droneservice.model.DroneState;
-import com.droneservice.model.Medication;
 import com.droneservice.repository.DroneRepository;
 import com.droneservice.service.DroneService;
 import org.modelmapper.ModelMapper;
@@ -85,10 +84,11 @@ public class DroneServiceImpl implements DroneService {
     public AvailableDronesDTO listAvailableDrones() {
 
         List<Drone> drones = droneRepo.findByDroneState(DroneState.LOADING);
-
+        System.out.println("SIze is : "+drones.size());
         List<DroneDTO> droneDTOs = drones.stream()
                 .map(drone -> modelMapper.map(drone, DroneDTO.class))
                 .collect(Collectors.toList());
+        System.out.println("Size after mapping  is : "+droneDTOs.size());
 
         AvailableDronesDTO availableDronesDTO = new AvailableDronesDTO();
         availableDronesDTO.setTotal(drones.size());
