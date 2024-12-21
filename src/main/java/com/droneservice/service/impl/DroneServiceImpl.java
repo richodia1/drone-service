@@ -39,7 +39,13 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public DroneDTO registerDrone(DroneDTO droneDto) {
 
-        Drone drone = modelMapper.map(droneDto,  Drone.class);
+        //Drone drone = modelMapper.map(droneDto,  Drone.class);
+        Drone drone = new Drone();
+        drone.setDroneModel(droneDto.getDroneModel());
+        drone.setCurrentWeight(droneDto.getMaxWeight());
+        drone.setMaxWeight(droneDto.getMaxWeight());
+        drone.setSerialNumber(droneDto.getSerialNumber());
+        drone.setBatteryLife(droneDto.getBatteryLife());
         if(drone.getBatteryLife()>BATTERY_LIMIT) {
             drone.setDroneState(DroneState.LOADING);
         }
@@ -51,7 +57,7 @@ public class DroneServiceImpl implements DroneService {
         drone.setCurrentWeight(0.0);
         Drone _drone = droneRepo.save(drone);
 
-        return   modelMapper.map(_drone,DroneDTO.class);
+        return   droneDto;
 
     }
 
@@ -100,8 +106,14 @@ public class DroneServiceImpl implements DroneService {
     @Override
     public DroneBatteryDTO checkBattery(String serialNumber) {
         // TODO Auto-generated method stub
+        DroneBatteryDTO dto = new DroneBatteryDTO();
         Drone drone = droneRepo.findBySerialNumber(serialNumber);
-        return modelMapper.map(drone,DroneBatteryDTO.class);
+        if(drone!=null){
+           dto.setBatteryLife(drone.getBatteryLife());
+           dto.setModel(drone.getDroneModel().toString());
+           dto.setSerialNumber(drone.getSerialNumber());
+        }
+        return dto;
     }
 
 }
