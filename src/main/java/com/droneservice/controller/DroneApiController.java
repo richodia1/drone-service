@@ -74,5 +74,12 @@ public class DroneApiController {
         return ResponseEntity.ok(audit);
 
     }
+    @GetMapping("/beauty")
+    public ResponseEntity<AuditDTO> getBeautiful(){
+        AuditDTO audit = droneService.getDroneAudit();
+        return ResponseEntity.ok(audit);
+
+    }
+
 
 }
